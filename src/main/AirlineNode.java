@@ -8,11 +8,32 @@ public class AirlineNode {
     String city;
     String country;
 
+    boolean isVisited;
+
+    public AirlineNode() {
+    }
+
+    public AirlineNode(String code, String name, String city, String country, boolean isVisited) {
+        this.code = code;
+        this.name = name;
+        this.city = city;
+        this.country = country;
+        this.isVisited = isVisited;
+    }
+
     public AirlineNode(String code, String name, String city, String country) {
         this.code = code;
         this.name = name;
         this.city = city;
         this.country = country;
+    }
+
+    public boolean isVisited() {
+        return isVisited;
+    }
+
+    public void setVisited(boolean visited) {
+        isVisited = visited;
     }
 
     public String getCode() {

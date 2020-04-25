@@ -7,21 +7,56 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+       static List<AirlineNode> vertices = new ArrayList();
     public static void main(String[] args) throws FileNotFoundException {
-        List<AirlineNode> vertices = new ArrayList();
-        List<AirlineEdge> edges = new ArrayList<>();
 
-        Scanner sc = new Scanner(new FileReader("src\\resources\\airports_test.txt"));
+        Scanner nodes = new Scanner(new FileReader("src\\resources\\airports.txt"));
+        Scanner edges = new Scanner(new FileReader("src\\resources\\routes.txt"));
 
+        addVertices(nodes);
+
+        AdjacenyGraph adjaceny = new AdjacenyGraph(vertices);
+
+        addEdges(edges, adjaceny);
+
+        adjaceny.toString();
+    }
+    static List<AirlineNode> addVertices(Scanner sc){
         while (sc.hasNextLine()) {
             String airport = sc.nextLine();
             String[] nodeData = airport.split(";");
 
             vertices.add(new AirlineNode(nodeData[0], nodeData[1], nodeData[2], nodeData[3]));
         }
+        return vertices;
+    }
+    static void addEdges(Scanner sc, Graph graph){
+        while (sc.hasNextLine()) {
+            String routes = sc.nextLine();
+            String[] nodeData = routes.split(";");
 
-        AdjacenyGraph adjaceny = new AdjacenyGraph(vertices, edges);
+            String airline_code = nodeData[0];
+            String from = nodeData[1];
+            String to = nodeData[2];
+            double distance = Double.parseDouble(nodeData[3]);
+            double time = Double.parseDouble(nodeData[4]);
 
-        adjaceny.toString();
+            AirlineNode fromNode = new AirlineNode();
+            AirlineNode toNode = new AirlineNode();
+
+            for(AirlineNode n: vertices){
+                if(n.getCode().equals(from)){
+                    fromNode = n;
+                }
+            }
+
+            for(AirlineNode n: vertices){
+                if(n.getCode().equals(to)){
+                    toNode = n;
+                }
+            }
+
+            graph.addEdge(fromNode, toNode, airline_code, distance, time);
+        }
     }
 }

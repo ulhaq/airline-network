@@ -7,9 +7,9 @@ public class AdjacenyGraph implements Graph {
     List<AirlineNode> vertices;
     List<AirlineEdge> edges;
 
-    public AdjacenyGraph(List<AirlineNode> vertices, List<AirlineEdge> edges) {
+    public AdjacenyGraph(List<AirlineNode> vertices) {
         this.vertices = vertices;
-        this.edges = edges;
+        this.edges = new ArrayList<>();
     }
 
     @Override
