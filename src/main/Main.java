@@ -7,23 +7,23 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    static List<AirlineNode> vertices = new ArrayList();
 
     public static void main(String[] args) throws FileNotFoundException {
+    List<AirlineNode> vertices = new ArrayList();
 
         Scanner nodes = new Scanner(new FileReader("src\\resources\\airports.txt"));
         Scanner edges = new Scanner(new FileReader("src\\resources\\routes.txt"));
 
-        addVertices(nodes);
+        addVertices(nodes, vertices);
 
         AdjacencyGraph adjacency = new AdjacencyGraph(vertices);
 
-        addEdges(edges, adjacency);
+        addEdges(edges, adjacency, vertices);
 
         adjacency.toString();
     }
 
-    static void addVertices(Scanner sc) {
+   public static void addVertices(Scanner sc, List<AirlineNode> vertices) {
         while (sc.hasNextLine()) {
             String airport = sc.nextLine();
             String[] nodeData = airport.split(";");
@@ -32,7 +32,7 @@ public class Main {
         }
     }
 
-    static void addEdges(Scanner sc, Graph graph) {
+    public static void addEdges(Scanner sc, Graph graph, List<AirlineNode> vertices) {
         while (sc.hasNextLine()) {
             String routes = sc.nextLine();
             String[] nodeData = routes.split(";");
@@ -59,4 +59,5 @@ public class Main {
             graph.addEdge(fromNode, toNode, airline_code, distance, time);
         }
     }
+
 }

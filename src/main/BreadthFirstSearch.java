@@ -1,7 +1,13 @@
 package main;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import static main.Main.addEdges;
+import static main.Main.addVertices;
 
 public class BreadthFirstSearch {
     private final Graph graph;
@@ -67,5 +73,20 @@ public class BreadthFirstSearch {
         }
 
         return nodeEdges;
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner nodes = new Scanner(new FileReader("src\\resources\\airports_test.txt"));
+        Scanner edges = new Scanner(new FileReader("src\\resources\\test.txt"));
+        List<AirlineNode> vertices = new ArrayList();
+
+        addVertices(nodes, vertices);
+
+        Graph adjacency = new AdjacencyGraph(vertices);
+
+        addEdges(edges, adjacency, vertices);
+        BreadthFirstSearch bfs = new BreadthFirstSearch(adjacency, vertices);
+
+        bfs.searchFrom(vertices.get(0), vertices.get(1));
     }
 }
