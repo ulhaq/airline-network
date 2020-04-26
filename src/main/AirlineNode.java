@@ -1,13 +1,10 @@
 package main;
 
-import java.util.List;
-
 public class AirlineNode {
     String code;
     String name;
     String city;
     String country;
-
     boolean isVisited;
 
     public AirlineNode() {

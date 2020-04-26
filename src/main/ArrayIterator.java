@@ -4,8 +4,8 @@ import java.util.Iterator;
 
 public class ArrayIterator<T> implements Iterator<T> {
     private final T[] items;
-    private int index;
     private final int end;
+    private int index;
 
     public ArrayIterator(T[] items, int start, int end) {
         this.items = items;
@@ -18,12 +18,14 @@ public class ArrayIterator<T> implements Iterator<T> {
     }
 
     @Override
-    public boolean hasNext() { return index != end; }
+    public boolean hasNext() {
+        return index != end;
+    }
 
     @Override
     public T next() {
         T item = items[index++];
-        index = index%items.length;
+        index = index % items.length;
         return item;
     }
 

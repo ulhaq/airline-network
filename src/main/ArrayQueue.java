@@ -12,27 +12,30 @@ public class ArrayQueue<T> implements Queue<T> {
     }
 
     @Override
-    public int getSize() { return end - start; }
+    public int getSize() {
+        return end - start;
+    }
 
     @Override
     public void enqueue(T item) {
         items[end++] = item;
-        end = end%items.length;
+        end = end % items.length;
     }
 
     @Override
     public T dequeue() {
         T item = items[start++];
-        start = start%items.length;
+        start = start % items.length;
         return item;
     }
 
     @Override
-    public T peek() { return items[start]; }
+    public T peek() {
+        return items[start];
+    }
 
     @Override
     public Iterator<T> iterator() {
         return new ArrayIterator<>(items, start, end);
     }
-
 }

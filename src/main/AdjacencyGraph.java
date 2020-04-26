@@ -3,11 +3,11 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdjacenyGraph implements Graph {
+public class AdjacencyGraph implements Graph {
     List<AirlineNode> vertices;
     List<AirlineEdge> edges;
 
-    public AdjacenyGraph(List<AirlineNode> vertices) {
+    public AdjacencyGraph(List<AirlineNode> vertices) {
         this.vertices = vertices;
         this.edges = new ArrayList<>();
     }
@@ -23,7 +23,7 @@ public class AdjacenyGraph implements Graph {
     }
 
     @Override
-    public Iterable<AirlineNode> adjacients(AirlineNode node) {
+    public Iterable<AirlineNode> adjacents(AirlineNode node) {
         List<AirlineNode> adjacients = new ArrayList<AirlineNode>();
 
         for (AirlineEdge edge : this.edges) { // O(n)

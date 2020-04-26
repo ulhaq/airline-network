@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-       static List<AirlineNode> vertices = new ArrayList();
+    static List<AirlineNode> vertices = new ArrayList();
+
     public static void main(String[] args) throws FileNotFoundException {
 
         Scanner nodes = new Scanner(new FileReader("src\\resources\\airports.txt"));
@@ -15,22 +16,23 @@ public class Main {
 
         addVertices(nodes);
 
-        AdjacenyGraph adjaceny = new AdjacenyGraph(vertices);
+        AdjacencyGraph adjacency = new AdjacencyGraph(vertices);
 
-        addEdges(edges, adjaceny);
+        addEdges(edges, adjacency);
 
-        adjaceny.toString();
+        adjacency.toString();
     }
-    static List<AirlineNode> addVertices(Scanner sc){
+
+    static void addVertices(Scanner sc) {
         while (sc.hasNextLine()) {
             String airport = sc.nextLine();
             String[] nodeData = airport.split(";");
 
             vertices.add(new AirlineNode(nodeData[0], nodeData[1], nodeData[2], nodeData[3]));
         }
-        return vertices;
     }
-    static void addEdges(Scanner sc, Graph graph){
+
+    static void addEdges(Scanner sc, Graph graph) {
         while (sc.hasNextLine()) {
             String routes = sc.nextLine();
             String[] nodeData = routes.split(";");
@@ -44,14 +46,12 @@ public class Main {
             AirlineNode fromNode = new AirlineNode();
             AirlineNode toNode = new AirlineNode();
 
-            for(AirlineNode n: vertices){
-                if(n.getCode().equals(from)){
+            for (AirlineNode n : vertices) {
+                if (n.getCode().equals(from)) {
                     fromNode = n;
                 }
-            }
 
-            for(AirlineNode n: vertices){
-                if(n.getCode().equals(to)){
+                if (n.getCode().equals(to)) {
                     toNode = n;
                 }
             }
