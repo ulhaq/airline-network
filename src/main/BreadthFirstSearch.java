@@ -25,6 +25,21 @@ public class BreadthFirstSearch {
         this.edges = new ArrayQueue<>(70_000);
     }
 
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner nodes = new Scanner(new FileReader("src\\resources\\airports_test.txt"));
+        Scanner edges = new Scanner(new FileReader("src\\resources\\test.txt"));
+        List<AirlineNode> vertices = new ArrayList();
+
+        addVertices(nodes, vertices);
+
+        Graph adjacency = new AdjacencyGraph(vertices);
+
+        addEdges(edges, adjacency, vertices);
+        BreadthFirstSearch bfs = new BreadthFirstSearch(adjacency, vertices);
+
+        bfs.searchFrom(vertices.get(0), vertices.get(1));
+    }
+
     public void register(AirlineEdge edge) {
         AirlineNode n = new AirlineNode();
         for (AirlineNode node : visitedFrom) {
@@ -42,26 +57,29 @@ public class BreadthFirstSearch {
         edges.enqueue(edge);
     }
 
-    public List<AirlineNode> searchFrom(AirlineNode fromNode, AirlineNode toNode) {
-        List<AirlineEdge> e = edges(fromNode);
-        for (AirlineEdge edge : e) {
-            register(edge);
-        }
+    public void searchFrom(AirlineNode fromNode, AirlineNode toNode) {
+        register(new AirlineEdge(fromNode, fromNode, 0, 0, fromNode.getCode())); //to enter the queue
 
-        List<AirlineNode> rsNode = new ArrayList<>();
-        while (!e.isEmpty()) {
+//        List<AirlineEdge> e = edges(fromNode);
+//        for (AirlineEdge edge : e) {
+//            register(edge);
+//        }
+
+        while (!edges.isEmpty()) {
             for (AirlineEdge edge : edges) {
-                if (!toNode.equals(edge.getTo())) {
-                    edges.dequeue();
-                    System.out.println("Dequeued");
-                } else {
-                    System.out.println("ToNode founded");
-                    rsNode.add(edge.getTo());
+                AirlineEdge step = edges.dequeue();
+                System.out.println("Dequeued");
+
+
+                Iterable<AirlineNode> nodes = graph.adjacents(fromNode);
+
+                for (AirlineNode node : nodes) {
+                    register(new AirlineEdge(node, edge.getTo(), edge.getDistance(), edge.getTime(), edge.getAirline_code()));
+//                    System.out.println("A route from " + fromNode.getCode() + " to " + toNode.getCode() + "");
                 }
             }
+//            System.out.println("ToNode not founded");
         }
-
-        return rsNode;
     }
 
     public List<AirlineEdge> edges(AirlineNode node) {
@@ -73,20 +91,5 @@ public class BreadthFirstSearch {
         }
 
         return nodeEdges;
-    }
-
-    public static void main(String[] args) throws FileNotFoundException {
-        Scanner nodes = new Scanner(new FileReader("src\\resources\\airports_test.txt"));
-        Scanner edges = new Scanner(new FileReader("src\\resources\\test.txt"));
-        List<AirlineNode> vertices = new ArrayList();
-
-        addVertices(nodes, vertices);
-
-        Graph adjacency = new AdjacencyGraph(vertices);
-
-        addEdges(edges, adjacency, vertices);
-        BreadthFirstSearch bfs = new BreadthFirstSearch(adjacency, vertices);
-
-        bfs.searchFrom(vertices.get(0), vertices.get(1));
     }
 }
